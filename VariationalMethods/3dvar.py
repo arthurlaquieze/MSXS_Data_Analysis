@@ -13,6 +13,7 @@ eye,# To generate an identity matrix
 ones, # To generate an array full of ones
 zeros, # To generate an array full of zeros
 linspace)# To get space and time position indices for observations 
+import numpy as np
 from numpy.linalg import \
 (inv,# To invert a matrix
 norm) # To compute the Euclidean norm
@@ -77,7 +78,7 @@ xb = xt + B.sqrtdot(randn(n))
 ##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #                          (4) Generate the observations
 ##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-y = # TO DO
+y = obs.hop(xt) + np.dot(sigmaR, np.random.randn(...))
 
 ##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #                          (5) Variational data assimilation
