@@ -5,7 +5,7 @@ import sys
 import math
 from numpy.lib.function_base import append
 
-sys.path.append("../Model")
+sys.path.append("..")
 
 from numpy.core.numeric import zeros_like
 from numpy import (
@@ -59,7 +59,7 @@ F = 8  # Forcing term
 model = lorenz95(F, dt)
 
 # Observation class initialization
-sigmaR = 1e-2  # observation error std
+sigmaR = 1e-4  # observation error std
 total_space_obs = 10  # total number of observations at fixed time
 total_time_obs = 5  # total number of observations at fixed location
 space_inds_obs = round(linspace(0, n, total_space_obs, endpoint=False)).astype(

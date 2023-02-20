@@ -33,7 +33,7 @@ for ii in range(m):
     R[ii, ii] = sigmaR * sigmaR
 
 # Background errors
-sigmaB = 0.8  # background error std
+sigmaB = 0.2  # background error std
 L = 1.0  # correlation length scale
 # btype = "diagonal"
 btype = "soar"
