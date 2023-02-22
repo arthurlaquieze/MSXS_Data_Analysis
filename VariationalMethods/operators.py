@@ -276,11 +276,8 @@ class Hessian3dVar:
         self.B = B
 
     def dot(self, dx):
-        # return dy = (Binv + HtRinvH) *dx
-        w = self.R.invdot(self.obs.tlm_hop(dx))
-        binv_dx = self.B.invdot(dx)
-        return
-        # return self.B.invdot(dx) + self.obs.adj_hop(self.obs.tlm_hop(dx))
+        dy = self.B.invdot(dx) + self.obs.adj_hop(self.R.invdot(self.obs.hop(dx)))
+        return dy
 
 
 class Hessian4dVar:

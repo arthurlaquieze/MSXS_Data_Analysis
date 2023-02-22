@@ -2,9 +2,8 @@
 # Programming: Selime Gurol (CERFACS), 2021
 
 import sys
-
-sys.path.append("..")
-
+sys.path.append('../Model')
+from models import lorenz95
 from numpy.core.numeric import zeros_like
 from numpy import (
     round,
@@ -25,7 +24,7 @@ from numpy.random import randn  # To generate samples from a normalized Gaussian
 import matplotlib.pyplot as plt  # To plot a graph
 from operators import Hessian3dVar, obs_operator, Rmatrix, Bmatrix
 from operators import Precond
-from Model.models import lorenz95
+
 from solvers import pcg
 
 
@@ -87,7 +86,7 @@ xb = xt + B.sqrtdot(randn(n))
 #                          (4) Generate the observations
 ##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # y = obs.hop(xt) + np.dot(sigmaR, np.random.randn(n))
-y = obs.hop(xt) + sigmaR * np.random.randn(n)
+y = obs.hop(xt) + sigmaR*(randn(total_space_obs))
 
 ##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #                          (5) Variational data assimilation
@@ -100,9 +99,9 @@ while iter_outer < max_outer:  # Gauss-Newton loop
     A = Hessian3dVar(obs, R, B)  # Define the Hessian matrix (Binv + HtRinvH)
     # TO DO                      # Complete Hessian3dVar in operators.py
 
-    d = y - obs.hop(xa)  # MISFIT
-    # b =  # Right hand side vector (Binv(xb - xa) + Ht*Rinv*d)
-    b = B.invdot(xb - xa) + obs.hopT(R.invdot(d))
+    d = y - obs.hop(xa)  # MISFIT y - H(xa)
+    # Right hand side vector (Binv(xb - xa) + Ht*Rinv*d)
+    b = B.invdot(xb - xa) + obs.adj_hop(R.invdot(d))
     print("{:<9d}{:<20.2f}{:<9.2f}".format(iter_outer, funcval(xa), norm(b)))
     if norm(b) < tol_grad:
         break
